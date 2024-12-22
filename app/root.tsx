@@ -6,7 +6,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { SidebarProvider, SidebarTrigger } from "~/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "~/components/ui/sidebar";
 import { AppSidebar } from "./components/ui/app-sidebar";
 import "./tailwind.css";
 
@@ -35,10 +39,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <SidebarProvider>
           <AppSidebar />
-          <main>
-            <SidebarTrigger />
-            {children}
-          </main>
+          <SidebarInset>
+            <div className="p-4">
+              <SidebarTrigger className="-ml-1" />
+              {children}
+            </div>
+          </SidebarInset>
         </SidebarProvider>
         <ScrollRestoration />
         <Scripts />
