@@ -7,6 +7,6 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export default function Index() {
-  return <h1>Index</h1>;
+export default function CatalogIndex() {
+  return <h1>Catalog Index</h1>;
 }
