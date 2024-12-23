@@ -1,4 +1,4 @@
-import { Files } from "@phosphor-icons/react";
+import { Empty, Files, HandPointing } from "@phosphor-icons/react";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData, useNavigate, useParams } from "@remix-run/react";
 import Page from "~/components/ui/page";
@@ -27,11 +27,15 @@ export default function IDDocsSplat() {
   const navigate = useNavigate();
   const params = useParams();
 
-  if (data.docs.length === 0) return <p>No documentation discovered.</p>;
+  const noDocs = data.docs.length === 0;
 
   return (
     <Page
-      breadcrumbs={[{ name: "Catalog", path: "/app" }, { name: params.name }]}
+      breadcrumbs={[
+        { name: "Catalog", path: "/app" },
+        { name: params.name },
+        { name: "Documentation" },
+      ]}
     >
       <div className="w-full max-w-64 flex space-x-2 items-center">
         <Files weight="bold" size={20} className="text-gray-700" />
@@ -39,6 +43,7 @@ export default function IDDocsSplat() {
           onValueChange={(value) =>
             navigate(`/app/${params.name}/docs/${value}`)
           }
+          disabled={noDocs}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a document" />
@@ -56,7 +61,18 @@ export default function IDDocsSplat() {
       {data.html ? (
         <div id="doc" dangerouslySetInnerHTML={{ __html: data.html }} />
       ) : (
-        <p>No document selected.</p>
+        <div className="h-full w-full flex flex-col items-center justify-center space-y-4 text-gray-500">
+          {noDocs ? (
+            <Empty size={32} weight="light" />
+          ) : (
+            <HandPointing size={32} weight="light" />
+          )}
+          <p className="text-sm">
+            {noDocs
+              ? `No documents avaiable for ${params.name} yet`
+              : "Please select a document"}
+          </p>
+        </div>
       )}
     </Page>
   );

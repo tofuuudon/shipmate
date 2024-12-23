@@ -10,7 +10,7 @@ export async function getOrgRepositories(request: Request) {
   const q = ["org:3sidedcube"];
   const url = new URL(request.url);
   const query = url.searchParams.get("query");
-  if (query) q.push(`${query} in:name`);
+  if (query) q.push(query);
 
   const octokit = new Octokit({ auth: accessToken });
   const response = await octokit.request("GET /search/repositories", {
