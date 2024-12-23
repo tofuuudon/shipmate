@@ -1,4 +1,4 @@
-import { Blueprint, Cube, HouseSimple } from "@phosphor-icons/react";
+import { Blueprint, Cube } from "@phosphor-icons/react";
 import {
   Sidebar,
   SidebarContent,
@@ -16,13 +16,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
 const items = [
   {
-    title: "Home",
-    url: "/app",
-    icon: <HouseSimple weight="bold" />,
-  },
-  {
     title: "Catalog",
-    url: "/app/catalog",
+    url: "/app",
     icon: <Cube weight="bold" />,
   },
   {
@@ -68,8 +63,8 @@ export function AppSidebar({ avatarUrl, name, username }: AppSidebarProps) {
         <SidebarMenuButton>
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarImage src={avatarUrl} alt={username} />
               <AvatarFallback className="rounded-lg">Me</AvatarFallback>
+              <AvatarImage src={avatarUrl} alt={username} />
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">{name ?? username}</span>

@@ -1,4 +1,4 @@
-import { createMemorySessionStorage } from "@remix-run/node";
+import { createMemorySessionStorage, redirect } from "@remix-run/node";
 
 type SessionData = {
   accessToken: string;
@@ -14,5 +14,12 @@ const { getSession, commitSession, destroySession } =
       name: "shipmate",
     },
   });
+
+export async function getAccessToken(request: Request) {
+  const { data } = await getSession(request.headers.get("cookie"));
+  if (!data.accessToken) throw redirect("/auth/login");
+
+  return data.accessToken;
+}
 
 export { commitSession, destroySession, getSession };
