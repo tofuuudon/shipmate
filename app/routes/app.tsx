@@ -1,11 +1,7 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { AppSidebar } from "~/components/ui/app-sidebar";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "~/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 import { getAccessToken } from "~/lib/session";
 import { getMe } from "~/server/get-me";
 
@@ -26,10 +22,7 @@ export default function App() {
         username={data.login}
       />
       <SidebarInset>
-        <div className="p-4">
-          <SidebarTrigger className="-ml-1 mb-4" />
-          <Outlet />
-        </div>
+        <Outlet />
       </SidebarInset>
     </SidebarProvider>
   );

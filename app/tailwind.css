@@ -91,3 +91,23 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+#doc > article > *:first-child {
+  @apply mt-0;
+}
+
+#doc > article h1 {
+  @apply text-xl font-bold mt-6 mb-2;
+}
+
+#doc > article h2 {
+  @apply text-lg font-bold mt-6 mb-2;
+}
+
+#doc > article h3 {
+  @apply font-bold mt-6 mb-2;
+}
+
+#doc > article p {
+  @apply my-2;
+}

@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import Page from "~/components/ui/page";
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,5 +9,9 @@ export const meta: MetaFunction = () => {
 };
 
 export default function BuildIndex() {
-  return <h1>Build Index</h1>;
+  return (
+    <Page breadcrumbs={[{ name: "Build" }]}>
+      <h1>Build Index</h1>
+    </Page>
+  );
 }

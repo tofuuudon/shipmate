@@ -86,14 +86,14 @@ export default function RepositoryCard({
         <div className="flex justify-end space-x-1 w-full">
           <a
             href={`/app/${name}/docs`}
-            className={buttonVariants({ variant: "outline" })}
+            className={buttonVariants({ variant: "outline", size: "icon" })}
           >
             <Files weight="bold" />
           </a>
           <a
             href={sourceUrl}
             target="_blank"
-            className={buttonVariants({ variant: "outline" })}
+            className={buttonVariants({ variant: "outline", size: "icon" })}
           >
             <Eye weight="bold" />
           </a>

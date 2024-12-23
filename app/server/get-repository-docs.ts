@@ -1,9 +1,11 @@
 import Markdoc from "@markdoc/markdoc";
+import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import { getAccessToken } from "~/lib/session";
 
 export type Documentation = {
   name: string;
+  title: string | null;
   path: string;
   content: string;
   html: string | null;
@@ -33,29 +35,39 @@ export async function getRepositoryDocs(
 
   const accessToken = await getAccessToken(request);
 
-  const dirResponse = await requestContent(
-    accessToken,
-    GITHUB_ORG,
-    repo,
-    "docs",
-  );
-  const dirData = dirResponse.data as unknown as Record<string, string>[];
-  const responses = (await Promise.all([
-    requestContent(accessToken, GITHUB_ORG, repo, "README.md"),
-    ...dirData.map((doc) =>
-      requestContent(accessToken, GITHUB_ORG, repo, doc.path),
-    ),
-  ])) as unknown as { data: Record<string, string> }[];
-  return responses.map((res) => {
-    const content = Buffer.from(res.data.content, "base64").toString("utf8");
-    const ast = Markdoc.parse(content);
-    const html = Markdoc.renderers.html(Markdoc.transform(ast));
+  try {
+    const dirResponse = await requestContent(
+      accessToken,
+      GITHUB_ORG,
+      repo,
+      "docs",
+    );
+    const dirData = dirResponse.data as unknown as Record<string, string>[];
+    const responses = (await Promise.all([
+      requestContent(accessToken, GITHUB_ORG, repo, "README.md"),
+      ...dirData.map((doc) =>
+        requestContent(accessToken, GITHUB_ORG, repo, doc.path),
+      ),
+    ])) as unknown as { data: Record<string, string> }[];
+    return responses.map((res) => {
+      const content = Buffer.from(res.data.content, "base64").toString("utf8");
+      const ast = Markdoc.parse(content);
+      const html = Markdoc.renderers.html(Markdoc.transform(ast));
+      const frontmatter = yaml.load(ast.attributes.frontmatter) as Record<
+        string,
+        string
+      >;
 
-    return {
-      name: res.data.name.replace(".md", ""),
-      path: res.data.path.replace("docs/", ""),
-      content,
-      html,
-    };
-  });
+      return {
+        name: res.data.name.replace(".md", ""),
+        title: frontmatter?.title ?? null,
+        path: res.data.path.replace("docs/", ""),
+        content,
+        html,
+      };
+    });
+  } catch {
+    console.warn(`No docs available for ${GITHUB_ORG}/${repo}.`);
+    return [];
+  }
 }
