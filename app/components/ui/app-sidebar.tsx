@@ -1,4 +1,5 @@
 import { Blueprint, Cube } from "@phosphor-icons/react";
+import { useLocation } from "@remix-run/react";
 import {
   Sidebar,
   SidebarContent,
@@ -34,10 +35,11 @@ type AppSidebarProps = {
 };
 
 export function AppSidebar({ avatarUrl, name, username }: AppSidebarProps) {
+  const { pathname } = useLocation();
+
   return (
     <Sidebar>
       <SidebarHeader />
-
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -45,7 +47,7 @@ export function AppSidebar({ avatarUrl, name, username }: AppSidebarProps) {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton isActive={pathname === item.url} asChild>
                     <a href={item.url}>
                       {item.icon}
                       <span>{item.title}</span>
@@ -58,7 +60,6 @@ export function AppSidebar({ avatarUrl, name, username }: AppSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
-
       <SidebarFooter>
         <SidebarMenuButton>
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
