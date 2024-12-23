@@ -47,7 +47,7 @@ export default function AppIndex() {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
         {data.map((repo) => (
           <RepositoryCard
-            key={repo.id}
+            key={repo.name}
             name={repo.name}
             description={repo.description}
             isPrivate={repo.private}

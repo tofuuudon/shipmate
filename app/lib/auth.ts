@@ -20,6 +20,7 @@ function createStrategy() {
       clientId: GITHUB_OAUTH_APP_CLIENT_ID,
       clientSecret: GITHUB_OAUTH_APP_CLIENT_SECRET,
       redirectURI: GITHUB_OAUTH_APP_REDIRECT_URI,
+      scopes: ["repo", "read:org", "read:user"],
     },
     async ({ tokens }) => {
       return { accessToken: tokens.accessToken() };

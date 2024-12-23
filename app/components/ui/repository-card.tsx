@@ -9,7 +9,7 @@ import classNames from "classnames";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Badge } from "./badge";
-import { Button, buttonVariants } from "./button";
+import { buttonVariants } from "./button";
 import {
   Card,
   CardContent,
@@ -84,9 +84,12 @@ export default function RepositoryCard({
       )}
       <CardFooter className="mt-auto">
         <div className="flex justify-end space-x-1 w-full">
-          <Button variant="outline">
+          <a
+            href={`/app/${name}/docs`}
+            className={buttonVariants({ variant: "outline" })}
+          >
             <Files weight="bold" />
-          </Button>
+          </a>
           <a
             href={sourceUrl}
             target="_blank"
