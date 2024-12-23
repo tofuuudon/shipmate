@@ -53,6 +53,7 @@ export default function AppIndex() {
             isPrivate={repo.private}
             stars={repo.stargazers_count}
             sourceUrl={repo.html_url}
+            updatedAt={repo.updated_at}
           />
         ))}
       </div>

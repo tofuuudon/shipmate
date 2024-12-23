@@ -6,10 +6,21 @@ import {
   Star,
 } from "@phosphor-icons/react";
 import classNames from "classnames";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { Badge } from "./badge";
 import { Button, buttonVariants } from "./button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
+
+dayjs.extend(relativeTime);
 
 type RepositoryCardProps = {
   name: string;
@@ -17,6 +28,7 @@ type RepositoryCardProps = {
   isPrivate: boolean;
   stars: number;
   sourceUrl: string;
+  updatedAt: string;
 };
 
 export default function RepositoryCard({
@@ -25,11 +37,13 @@ export default function RepositoryCard({
   isPrivate,
   stars,
   sourceUrl,
+  updatedAt,
 }: RepositoryCardProps) {
   return (
     <Card className="flex flex-col">
-      <CardHeader className="space-y-2">
+      <CardHeader>
         <CardTitle>{name}</CardTitle>
+        <CardDescription>Updated {dayjs(updatedAt).fromNow()}</CardDescription>
         <div className="flex space-x-1.5">
           <Badge
             variant="outline"
@@ -54,8 +68,8 @@ export default function RepositoryCard({
           </Badge>
         </div>
       </CardHeader>
-      <CardContent>
-        {Boolean(description) && (
+      {Boolean(description) && (
+        <CardContent>
           <HoverCard>
             <HoverCardTrigger>
               <p className="line-clamp-2 text-sm cursor-pointer">
@@ -66,8 +80,8 @@ export default function RepositoryCard({
               <p>{description}</p>
             </HoverCardContent>
           </HoverCard>
-        )}
-      </CardContent>
+        </CardContent>
+      )}
       <CardFooter className="mt-auto">
         <div className="flex justify-end space-x-1 w-full">
           <Button variant="outline">
