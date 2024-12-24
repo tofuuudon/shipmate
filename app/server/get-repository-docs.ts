@@ -5,10 +5,10 @@ import { getAccessToken } from "~/lib/session";
 
 export type Documentation = {
   name: string;
-  title: string | null;
   path: string;
   content: string;
   html: string | null;
+  frontmatter: Record<string, string> | undefined | null;
 };
 
 function requestContent(
@@ -60,10 +60,10 @@ export async function getRepositoryDocs(
 
       return {
         name: res.data.name.replace(".md", ""),
-        title: frontmatter?.title ?? null,
         path: res.data.path.replace("docs/", ""),
         content,
         html,
+        frontmatter,
       };
     });
   } catch {

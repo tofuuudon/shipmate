@@ -1,6 +1,7 @@
 import { Empty, Files, HandPointing } from "@phosphor-icons/react";
 import { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
 import { useLoaderData, useNavigate, useParams } from "@remix-run/react";
+import FrontmatterSheet from "~/components/ui/frontmatter-sheet";
 import Page from "~/components/ui/page";
 import {
   Select,
@@ -18,9 +19,11 @@ export function meta({ params }: MetaArgs) {
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const data = await getRepositoryDocs(request, params.name as string);
+  const current = data.find((doc) => doc.path === params["*"]);
 
   return {
-    html: data.find((doc) => doc.path === params["*"])?.html,
+    html: current?.html,
+    frontmatter: current?.frontmatter,
     docs: data.map((doc) => ({ ...doc, html: undefined })),
   };
 }
@@ -41,25 +44,28 @@ export default function IDDocsSplat() {
         { name: "Documentation" },
       ]}
     >
-      <div className="w-full max-w-64 flex space-x-2 items-center">
-        <Files weight="bold" size={20} className="text-gray-700" />
-        <Select
-          onValueChange={(value) =>
-            navigate(`/app/${params.name}/docs/${value}`)
-          }
-          disabled={noDocs}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select a document" />
-          </SelectTrigger>
-          <SelectContent>
-            {data.docs.map((doc) => (
-              <SelectItem key={doc.path} value={doc.path}>
-                {doc.title ?? doc.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex justify-between items-center">
+        <div className="w-full max-w-64 flex space-x-2 items-center">
+          <Files weight="bold" size={20} className="text-gray-700" />
+          <Select
+            onValueChange={(value) =>
+              navigate(`/app/${params.name}/docs/${value}`)
+            }
+            disabled={noDocs}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select a document" />
+            </SelectTrigger>
+            <SelectContent>
+              {data.docs.map((doc) => (
+                <SelectItem key={doc.path} value={doc.path}>
+                  {doc.frontmatter?.title ?? doc.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <FrontmatterSheet frontmatter={data.frontmatter} />
       </div>
       <Separator className="mt-4 mb-8" />
       {data.html ? (
