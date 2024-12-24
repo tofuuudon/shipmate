@@ -1,5 +1,5 @@
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import { type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
+import { type LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { ChangeEvent, useState } from "react";
 import { Button } from "~/components/ui/button";
@@ -8,12 +8,9 @@ import Page from "~/components/ui/page";
 import RepositoryCard from "~/components/ui/repository-card";
 import { getOrgRepositories } from "~/server/get-org-repositories";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
+export function meta() {
+  return [{ title: "Catalog" }];
+}
 
 export async function loader({ request }: LoaderFunctionArgs) {
   return await getOrgRepositories(request);

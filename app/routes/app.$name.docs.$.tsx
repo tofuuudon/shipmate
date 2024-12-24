@@ -1,5 +1,5 @@
 import { Empty, Files, HandPointing } from "@phosphor-icons/react";
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
 import { useLoaderData, useNavigate, useParams } from "@remix-run/react";
 import Page from "~/components/ui/page";
 import {
@@ -11,6 +11,10 @@ import {
 } from "~/components/ui/select";
 import { Separator } from "~/components/ui/separator";
 import { getRepositoryDocs } from "~/server/get-repository-docs";
+
+export function meta({ params }: MetaArgs) {
+  return [{ title: `Documentation | ${params.name}` }];
+}
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const data = await getRepositoryDocs(request, params.name as string);
