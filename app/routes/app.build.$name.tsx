@@ -1,5 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  redirect,
+} from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -44,7 +48,9 @@ export async function action({ request, params }: ActionFunctionArgs) {
   if (!name) throw new Error("No name.");
   if (!description) throw new Error("No description.");
 
-  return await createOrgRepository(request, templateName, name, description);
+  await createOrgRepository(request, templateName, name, description);
+
+  return redirect(`/app/${name}`);
 }
 
 const formSchema = z.object({
@@ -52,7 +58,7 @@ const formSchema = z.object({
   description: z.string(),
 });
 
-export default function BuildIndex() {
+export default function BuildName() {
   // const data = useLoaderData<typeof loader>();
   // const inputs = Object.entries(data.inputs).map(([key, value]) => ({
   //   key,
@@ -72,10 +78,8 @@ export default function BuildIndex() {
     });
   }
 
-  console.log(fetcher.data);
-
   return (
-    <Page breadcrumbs={[{ name: "Build" }]}>
+    <Page breadcrumbs={[{ name: "Build" }]} loading={fetcher.state !== "idle"}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
           <FormField

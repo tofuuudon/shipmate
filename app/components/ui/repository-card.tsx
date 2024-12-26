@@ -1,6 +1,7 @@
 import {
+  BookOpenText,
+  Code,
   Eye,
-  Files,
   LockSimple,
   LockSimpleOpen,
   Star,
@@ -86,13 +87,19 @@ export default function RepositoryCard({
         <div className="flex justify-end space-x-1 w-full">
           <a
             href={`/app/${name}/docs`}
-            className={buttonVariants({ variant: "outline", size: "icon" })}
+            className={buttonVariants({ variant: "secondary", size: "icon" })}
           >
-            <Files weight="bold" />
+            <BookOpenText weight="bold" />
           </a>
           <a
             href={sourceUrl}
             target="_blank"
+            className={buttonVariants({ variant: "secondary", size: "icon" })}
+          >
+            <Code weight="bold" />
+          </a>
+          <a
+            href={`/app/${name}`}
             className={buttonVariants({ variant: "outline", size: "icon" })}
           >
             <Eye weight="bold" />

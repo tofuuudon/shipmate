@@ -13,7 +13,7 @@ export async function createOrgRepository(
   const accessToken = await getAccessToken(request);
 
   const octokit = new Octokit({ auth: accessToken });
-  const response = await octokit.request(
+  return octokit.request(
     "POST /repos/{template_owner}/{template_repo}/generate",
     {
       headers: { "X-GitHub-Api-Version": "2022-11-28" },
@@ -22,8 +22,7 @@ export async function createOrgRepository(
       owner: GITHUB_ORG,
       name,
       description,
+      private: true,
     },
   );
-  console.log(response);
-  return {};
 }

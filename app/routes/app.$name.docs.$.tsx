@@ -40,7 +40,7 @@ export default function IDDocsSplat() {
     <Page
       breadcrumbs={[
         { name: "Catalog", path: "/app" },
-        { name: params.name },
+        { name: params.name, path: `/app/${params.name}` },
         { name: "Documentation" },
       ]}
     >
