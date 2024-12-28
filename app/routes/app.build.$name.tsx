@@ -1,7 +1,12 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  redirect,
+} from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import BuilderForm from "~/components/ui/builder-form";
 import Page from "~/components/ui/page";
+import { createOrgRepository } from "~/server/create-org-repository";
 import { getOrgRepository } from "~/server/get-org-repositories";
 import { getTemplatePresets } from "~/server/get-templates";
 
@@ -27,12 +32,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
   if (!name) throw new Error("No name.");
   if (!description) throw new Error("No description.");
 
-  // TODO: Pass payload to create action
+  await createOrgRepository(
+    request,
+    templateName,
+    name,
+    description,
+    JSON.stringify(payload),
+  );
 
-  return {};
-  // await createOrgRepository(request, templateName, name, description, inputs);
-  //
-  // return redirect(`/app/${name}`);
+  return redirect(`/app/${name}`);
 }
 
 export default function BuildName() {

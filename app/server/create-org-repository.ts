@@ -6,7 +6,7 @@ export async function createOrgRepository(
   templateName: string,
   name: string,
   description: string,
-  inputs: Record<string, string>,
+  payload: string,
 ) {
   const { GITHUB_ORG } = process.env;
   if (!GITHUB_ORG) throw new Error("No GITHUB_ORG.");
@@ -53,7 +53,9 @@ export async function createOrgRepository(
       repo: name,
       workflow_id: "setup.yaml",
       ref: "main",
-      inputs,
+      inputs: {
+        payload,
+      },
     },
   );
 }
