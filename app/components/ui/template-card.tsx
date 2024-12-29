@@ -1,4 +1,4 @@
-import { Eye, StackPlus } from "@phosphor-icons/react";
+import { Code, StackPlus } from "@phosphor-icons/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { buttonVariants } from "./button";
@@ -54,7 +54,7 @@ export default function TemplateCard({
             target="_blank"
             className={buttonVariants({ variant: "outline", size: "icon" })}
           >
-            <Eye weight="bold" />
+            <Code weight="bold" />
           </a>
           <a
             href={`/app/build/${name}`}
