@@ -68,7 +68,7 @@ export default function BuilderForm({ fetcher, presets }: BuilderFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 py-4">
         <FormField
           control={form.control}
           name="name"
@@ -128,7 +128,9 @@ export default function BuilderForm({ fetcher, presets }: BuilderFormProps) {
               )}
             />
           ))}
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={fetcher.state !== "idle"}>
+          Submit
+        </Button>
       </form>
     </Form>
   );
