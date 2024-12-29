@@ -47,7 +47,12 @@ export default function BuilderForm({ fetcher, presets }: BuilderFormProps) {
   );
 
   let schemaObj: Record<string, z.ZodString> = {
-    name: z.string(),
+    name: z
+      .string()
+      .regex(
+        new RegExp(/^[A-Za-z0-9_.-]*$/),
+        "Repo name must not have spaces or special characters",
+      ),
     description: z.string(),
   };
   Object.entries(selectedPreset?.inputs ?? {}).forEach(([key]) => {
