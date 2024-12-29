@@ -73,7 +73,10 @@ export default function BuilderForm({ fetcher, presets }: BuilderFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 py-4">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 py-4 max-w-[400px]"
+      >
         <FormField
           control={form.control}
           name="name"

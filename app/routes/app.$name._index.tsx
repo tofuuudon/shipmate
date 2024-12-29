@@ -2,6 +2,7 @@ import { BookOpenText, Code } from "@phosphor-icons/react";
 import { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { buttonVariants } from "~/components/ui/button";
+import ErrorPage from "~/components/ui/error-page";
 import Page from "~/components/ui/page";
 import { Separator } from "~/components/ui/separator";
 import { getOrgRepository } from "~/server/get-org-repositories";
@@ -53,4 +54,8 @@ export default function AppName() {
       <Separator />
     </Page>
   );
+}
+
+export function ErrorBoundary() {
+  return <ErrorPage message="Oops, something went wrong ..." />;
 }
