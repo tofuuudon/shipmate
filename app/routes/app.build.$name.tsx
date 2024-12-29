@@ -59,7 +59,12 @@ export default function BuildName() {
   const fetcher = useFetcher<typeof action>();
 
   return (
-    <Page breadcrumbs={[{ name: "Build" }]}>
+    <Page
+      breadcrumbs={[
+        { name: "Build", path: "/app/build" },
+        { name: data.repo.name },
+      ]}
+    >
       <header className="flex justify-between pb-4">
         <div className="flex flex-col space-y-2">
           <h1 className="text-2xl font-bold">{data.repo.name}</h1>
