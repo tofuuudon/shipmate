@@ -56,4 +56,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/tofuuudon/shipmate:${{ env.TAG_NAME }}
-            ghcr.io/tofuuudonshipmate:latest
+            ghcr.io/tofuuudon/shipmate:latest
