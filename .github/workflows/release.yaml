@@ -55,5 +55,5 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            shipmate:${{ env.TAG_NAME }}
-            shipmate:latest
+            ghcr.io/tofuuudon/shipmate:${{ env.TAG_NAME }}
+            ghcr.io/tofuuudonshipmate:latest
